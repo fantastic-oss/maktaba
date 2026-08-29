@@ -1,320 +1,1088 @@
-// ============================================
-// Dynamic Data Loading System
-// ============================================
+/* =========================================================
+   DEFAULT DATA / FALLBACKS
 
-// Default data (fallback if data.json fails to load)
-const defaultData = {
+   هذا المحتوى يستخدم تلقائياً إذا:
+   - فشل تحميل data.json
+   - كان أحد الحقول مفقوداً
+========================================================= */
+
+const DEFAULT_DATA = {
+
     store_info: {
-        name: "مكتبة الطالب",
+        name: "مكتبتنا",
         whatsapp: "+212779063241",
         email: "taswe9agency@yahoo.com",
-        map_link: "https://maps.google.com/?q=Casablanca"
+        google_maps: "#"
     },
+
     branding: {
-        primary_color: "#2ecc71",
-        secondary_color: "#27ae60"
+        primary_color: "#6C63FF",
+        secondary_color: "#FF6584"
     },
+
     assets: {
         logo: "assets/logo.png",
         background_video: "assets/interface.mp4",
-        proof_image: "assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg",
-        gallery_images: ["assets/i.png", "assets/i1.png", "assets/i2.png", "assets/i3.png", "assets/i5.png"]
+
+        gallery: [
+            "assets/i.png",
+            "assets/i1.png",
+            "assets/i2.png",
+            "assets/i3.png",
+            "assets/i5.png"
+        ],
+
+        proof_image:
+            "assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
     },
+
     content: {
-        main_title: "تجهيز اللوائح المدرسية",
-        subtitle: "نوفر لك جميع الأدوات المدرسية بجودة عالية وأسعار مناسبة",
-        form_title: "اطلب اللائحة الآن",
-        order_type_label: "نوع الطلب:",
-        pickup_option: "نوجدها ليك وتجي تاخذها واجدة",
-        delivery_option: "التوصيل للمنزل",
-        name_label: "الاسم الكامل:",
-        name_placeholder: "أدخل اسمك الكامل",
-        address_label: "عنوان التوصيل:",
-        address_placeholder: "الحي، الشارع، رقم المنزل",
-        availability_label: "متى ستكون متوفراً:",
-        availability_placeholder: "مثال: متوفر يومياً بعد الساعة 5 مساءً",
-        submit_btn_text: "إرسال اللائحة عبر الواتساب",
-        proof_text: "نجهز طلباتكم باحترافية وسرعة",
-        footer_text: "© 2024 جميع الحقوق محفوظة",
-        email_text: "البريد الإلكتروني",
-        map_text: "موقعنا على الخريطة"
+
+        store_subtitle:
+            "مستلزمات مدرسية بكل سهولة",
+
+        location_button:
+            "موقع المكتبة",
+
+        hero_badge:
+            "🎒 الدخول المدرسي أصبح أسهل",
+
+        hero_title:
+            "أرسل لائحتك وسنجهز كل مستلزماتك",
+
+        hero_description:
+            "وفر وقتك وتجنب عناء البحث. أرسل لنا لائحة الأدوات المدرسية عبر واتساب، وسنقوم بتجهيزها لك باحترافية وسرعة.",
+
+        benefits: [
+            "تجهيز احترافي للطلبات",
+            "توفير الوقت والمجهود",
+            "استلام من المكتبة أو توصيل للمنزل"
+        ],
+
+        proof_title:
+            "نجهز طلباتكم باحترافية وسرعة",
+
+        proof_description:
+            "فقط أرسل لائحتك وسنتكفل بالباقي",
+
+        form_title:
+            "كيف ترغب في استلام طلبك؟",
+
+        form_description:
+            "اختر الطريقة المناسبة لك ثم أرسل لائحتك عبر واتساب",
+
+        pickup_title:
+            "نوجدها ليك وتجي تاخذها واجدة",
+
+        pickup_description:
+            "استلام مباشر من المكتبة",
+
+        delivery_title:
+            "التوصيل للمنزل",
+
+        delivery_description:
+            "نوصل طلبك إلى عنوانك",
+
+        name_label:
+            "الاسم الكامل",
+
+        name_placeholder:
+            "أدخل اسمك الكامل",
+
+        address_label:
+            "عنوان التوصيل",
+
+        address_placeholder:
+            "المدينة، الحي، الشارع...",
+
+        time_label:
+            "متى ستكون متوفراً؟",
+
+        time_placeholder:
+            "مثال: بعد الساعة 17:00",
+
+        submit_button:
+            "إرسال اللائحة عبر الواتساب",
+
+        form_note:
+            "سيتم فتح واتساب لإرسال تفاصيل طلبك وصورة اللائحة.",
+
+        footer_text:
+            "جميع حقوق النشر محفوظة",
+
+        footer_email:
+            "البريد الإلكتروني",
+
+        footer_location:
+            "موقع المكتبة"
     }
 };
 
-// WhatsApp message templates
-const messageTemplates = {
-    pickup: (storeName, name) => 
-        `مرحباً مكتبة ${storeName}، أود إرسال لائحة الأدوات المدرسية.\n` +
-        `نوع الطلب: استلام من المكتبة\n` +
-        `الاسم: ${name}\n` +
-        `تفضلوا صورة اللائحة:`,
-    
-    delivery: (storeName, name, address, availability) => 
-        `مرحباً مكتبة ${storeName}، أود إرسال لائحة الأدوات المدرسية.\n` +
-        `نوع الطلب: توصيل للمنزل\n` +
-        `الاسم: ${name}\n` +
-        `العنوان: ${address}\n` +
-        `الوقت المناسب: ${availability}\n` +
-        `تفضلوا صورة اللائحة:`
-};
 
-// ============================================
-// Initialize Application
-// ============================================
-document.addEventListener('DOMContentLoaded', async function() {
+
+/* =========================================================
+   APPLICATION STATE
+========================================================= */
+
+let appData = DEFAULT_DATA;
+
+
+
+/* =========================================================
+   DOM READY
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await loadData();
+
+    setupOrderTypeLogic();
+
+    setupFormSubmission();
+
+});
+
+
+
+/* =========================================================
+   LOAD DATA.JSON
+========================================================= */
+
+async function loadData() {
+
     try {
-        // Fetch data from JSON file
-        const response = await fetch('data.json');
+
+        const response = await fetch("data.json");
+
         if (!response.ok) {
-            throw new Error('Failed to load data.json');
+            throw new Error(
+                `HTTP Error: ${response.status}`
+            );
         }
-        const data = await response.json();
-        initializeApp(data);
-    } catch (error) {
-        console.warn('Using fallback data due to error:', error);
-        initializeApp(defaultData);
-    }
-});
 
-// ============================================
-// Main Initialization Function
-// ============================================
-function initializeApp(data) {
-    // Apply branding colors
-    applyBranding(data.branding);
-    
-    // Update store information
-    updateStoreInfo(data.store_info);
-    
-    // Update content
-    updateContent(data.content);
-    
-    // Update assets
-    updateAssets(data.assets);
-    
-    // Setup form logic
-    setupFormLogic(data.store_info);
-    
-    // Update links
-    updateLinks(data.store_info);
+
+        const jsonData = await response.json();
+
+
+        /*
+            دمج البيانات مع البيانات الافتراضية.
+
+            بهذه الطريقة إذا كان حقل مفقوداً في JSON،
+            يتم استخدام القيمة الافتراضية بدلاً من
+            توقف الموقع.
+        */
+
+        appData = deepMerge(
+            DEFAULT_DATA,
+            jsonData
+        );
+
+
+        applyDataToWebsite();
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "تعذر تحميل data.json. سيتم استخدام البيانات الافتراضية.",
+            error
+        );
+
+
+        appData = DEFAULT_DATA;
+
+        applyDataToWebsite();
+
+    }
+
 }
 
-// ============================================
-// Apply Branding Colors
-// ============================================
-function applyBranding(branding) {
-    if (!branding) return;
-    
-    const root = document.documentElement;
-    
-    if (branding.primary_color) {
-        root.style.setProperty('--primary-color', branding.primary_color);
+
+
+/* =========================================================
+   DEEP MERGE
+
+   دمج البيانات بدون فقدان الحقول الافتراضية
+========================================================= */
+
+function deepMerge(target, source) {
+
+    const output = { ...target };
+
+
+    if (
+        !source ||
+        typeof source !== "object"
+    ) {
+        return output;
     }
-    
-    if (branding.secondary_color) {
-        root.style.setProperty('--secondary-color', branding.secondary_color);
-    }
+
+
+    Object.keys(source).forEach(key => {
+
+        if (
+            source[key] &&
+            typeof source[key] === "object" &&
+            !Array.isArray(source[key])
+        ) {
+
+            output[key] = deepMerge(
+                target[key] || {},
+                source[key]
+            );
+
+        }
+
+        else {
+
+            output[key] = source[key];
+
+        }
+
+    });
+
+
+    return output;
+
 }
 
-// ============================================
-// Update Store Information
-// ============================================
-function updateStoreInfo(storeInfo) {
-    if (!storeInfo) return;
-    
-    // Update document title
-    if (storeInfo.name) {
-        document.title = `${storeInfo.name} - تجهيز اللوائح المدرسية`;
+
+
+/* =========================================================
+   APPLY DATA
+========================================================= */
+
+function applyDataToWebsite() {
+
+    const {
+        store_info,
+        branding,
+        assets,
+        content
+    } = appData;
+
+
+
+    /* =====================================================
+       CSS COLORS
+    ===================================================== */
+
+    setCSSVariable(
+        "--primary-color",
+        branding.primary_color
+    );
+
+
+    setCSSVariable(
+        "--secondary-color",
+        branding.secondary_color
+    );
+
+
+    /*
+        إنشاء RGB من اللون الرئيسي
+        لاستخدامه في rgba()
+    */
+
+    const primaryRGB = hexToRGB(
+        branding.primary_color
+    );
+
+
+    if (primaryRGB) {
+
+        setCSSVariable(
+            "--primary-rgb",
+            primaryRGB
+        );
+
     }
+
+
+
+    /* =====================================================
+       PAGE TITLE
+    ===================================================== */
+
+    document.title =
+        store_info.name || DEFAULT_DATA.store_info.name;
+
+
+
+    /* =====================================================
+       ASSETS
+    ===================================================== */
+
+    setImageSource(
+        "storeLogo",
+        assets.logo
+    );
+
+
+    setImageSource(
+        "proofImage",
+        assets.proof_image
+    );
+
+
+    setVideoSource(
+        "backgroundVideo",
+        assets.background_video
+    );
+
+
+
+    /* =====================================================
+       STORE INFORMATION
+    ===================================================== */
+
+    setText(
+        "storeNameHeader",
+        store_info.name
+    );
+
+
+    setText(
+        "footerStoreName",
+        store_info.name
+    );
+
+
+    setText(
+        "storeSubtitleHeader",
+        content.store_subtitle
+    );
+
+
+
+    /* =====================================================
+       MAP LINKS
+    ===================================================== */
+
+    setLink(
+        "mapLink",
+        store_info.google_maps
+    );
+
+
+    setLink(
+        "footerMapLink",
+        store_info.google_maps
+    );
+
+
+
+    /* =====================================================
+       EMAIL
+    ===================================================== */
+
+    const emailLink =
+        document.getElementById("emailLink");
+
+
+    if (
+        emailLink &&
+        store_info.email
+    ) {
+
+        emailLink.href =
+            `mailto:${store_info.email}`;
+
+    }
+
+
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    setText(
+        "locationButtonText",
+        content.location_button
+    );
+
+
+    setText(
+        "heroBadge",
+        content.hero_badge
+    );
+
+
+    setText(
+        "heroTitle",
+        content.hero_title
+    );
+
+
+    setText(
+        "heroDescription",
+        content.hero_description
+    );
+
+
+    setText(
+        "benefit1",
+        content.benefits?.[0]
+    );
+
+
+    setText(
+        "benefit2",
+        content.benefits?.[1]
+    );
+
+
+    setText(
+        "benefit3",
+        content.benefits?.[2]
+    );
+
+
+    setText(
+        "proofTitle",
+        content.proof_title
+    );
+
+
+    setText(
+        "proofDescription",
+        content.proof_description
+    );
+
+
+    setText(
+        "formTitle",
+        content.form_title
+    );
+
+
+    setText(
+        "formDescription",
+        content.form_description
+    );
+
+
+    setText(
+        "pickupTitle",
+        content.pickup_title
+    );
+
+
+    setText(
+        "pickupDescription",
+        content.pickup_description
+    );
+
+
+    setText(
+        "deliveryTitle",
+        content.delivery_title
+    );
+
+
+    setText(
+        "deliveryDescription",
+        content.delivery_description
+    );
+
+
+    setText(
+        "nameLabel",
+        content.name_label
+    );
+
+
+    setText(
+        "addressLabel",
+        content.address_label
+    );
+
+
+    setText(
+        "timeLabel",
+        content.time_label
+    );
+
+
+    setText(
+        "submitButtonText",
+        content.submit_button
+    );
+
+
+    setText(
+        "formNote",
+        content.form_note
+    );
+
+
+    setText(
+        "footerText",
+        content.footer_text
+    );
+
+
+    setText(
+        "footerEmail",
+        content.footer_email
+    );
+
+
+    setText(
+        "footerLocation",
+        content.footer_location
+    );
+
+
+
+    /* =====================================================
+       INPUT PLACEHOLDERS
+    ===================================================== */
+
+    setPlaceholder(
+        "fullName",
+        content.name_placeholder
+    );
+
+
+    setPlaceholder(
+        "address",
+        content.address_placeholder
+    );
+
+
+    setPlaceholder(
+        "availableTime",
+        content.time_placeholder
+    );
+
+
+
+    /* =====================================================
+       GALLERY
+    ===================================================== */
+
+    renderGallery(
+        assets.gallery
+    );
+
 }
 
-// ============================================
-// Update Content
-// ============================================
-function updateContent(content) {
-    if (!content) return;
-    
-    const contentMap = {
-        main_title: 'mainTitle',
-        subtitle: 'subtitle',
-        form_title: 'formTitle',
-        order_type_label: 'orderTypeLabel',
-        pickup_option: 'pickupOption',
-        delivery_option: 'deliveryOption',
-        name_label: 'nameLabel',
-        name_placeholder: 'fullName',
-        address_label: 'addressLabel',
-        address_placeholder: 'address',
-        availability_label: 'availabilityLabel',
-        availability_placeholder: 'availability',
-        submit_btn_text: 'submitBtnText',
-        proof_text: 'proofText',
-        footer_text: 'footerText',
-        email_text: 'emailText',
-        map_text: 'mapText'
-    };
-    
-    Object.entries(contentMap).forEach(([key, elementId]) => {
-        const element = document.getElementById(elementId);
-        if (element && content[key]) {
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                element.placeholder = content[key];
-            } else {
-                element.textContent = content[key];
+
+
+/* =========================================================
+   HELPER FUNCTIONS
+========================================================= */
+
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (
+        element &&
+        value
+    ) {
+        element.textContent = value;
+    }
+
+}
+
+
+
+function setPlaceholder(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (
+        element &&
+        value
+    ) {
+        element.placeholder = value;
+    }
+
+}
+
+
+
+function setLink(id, url) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (
+        element &&
+        url
+    ) {
+        element.href = url;
+    }
+
+}
+
+
+
+function setImageSource(id, source) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (
+        element &&
+        source
+    ) {
+
+        element.src = source;
+
+    }
+
+}
+
+
+
+function setVideoSource(id, source) {
+
+    const video =
+        document.getElementById(id);
+
+
+    if (
+        video &&
+        source
+    ) {
+
+        video.src = source;
+
+        video.load();
+
+    }
+
+}
+
+
+
+function setCSSVariable(name, value) {
+
+    if (!value) return;
+
+
+    document.documentElement.style.setProperty(
+        name,
+        value
+    );
+
+}
+
+
+
+/* =========================================================
+   HEX TO RGB
+========================================================= */
+
+function hexToRGB(hex) {
+
+    if (!hex) return null;
+
+
+    let cleanHex =
+        hex.replace("#", "");
+
+
+    if (cleanHex.length === 3) {
+
+        cleanHex =
+            cleanHex
+                .split("")
+                .map(char => char + char)
+                .join("");
+
+    }
+
+
+    const number =
+        parseInt(cleanHex, 16);
+
+
+    if (Number.isNaN(number)) {
+        return null;
+    }
+
+
+    const r =
+        (number >> 16) & 255;
+
+
+    const g =
+        (number >> 8) & 255;
+
+
+    const b =
+        number & 255;
+
+
+    return `${r}, ${g}, ${b}`;
+
+}
+
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
+
+function renderGallery(images) {
+
+    const gallery =
+        document.getElementById("gallery");
+
+
+    if (!gallery) return;
+
+
+    gallery.innerHTML = "";
+
+
+    if (
+        !Array.isArray(images) ||
+        images.length === 0
+    ) {
+        return;
+    }
+
+
+    images.forEach((imagePath, index) => {
+
+        if (!imagePath) return;
+
+
+        const image =
+            document.createElement("img");
+
+
+        image.src = imagePath;
+
+
+        image.alt =
+            `صورة من منتجات المكتبة ${index + 1}`;
+
+
+        image.loading = "lazy";
+
+
+        /*
+            إذا كانت الصورة غير موجودة،
+            يتم إخفاؤها بدون التأثير على الصفحة.
+        */
+
+        image.onerror = () => {
+            image.remove();
+        };
+
+
+        gallery.appendChild(image);
+
+    });
+
+}
+
+
+
+/* =========================================================
+   ORDER TYPE LOGIC
+========================================================= */
+
+function setupOrderTypeLogic() {
+
+    const pickupOption =
+        document.getElementById("pickupOption");
+
+
+    const deliveryOption =
+        document.getElementById("deliveryOption");
+
+
+    const deliveryFields =
+        document.getElementById("deliveryFields");
+
+
+    const addressInput =
+        document.getElementById("address");
+
+
+    const timeInput =
+        document.getElementById("availableTime");
+
+
+    const orderTypeInputs =
+        document.querySelectorAll(
+            'input[name="orderType"]'
+        );
+
+
+    orderTypeInputs.forEach(input => {
+
+        input.addEventListener(
+            "change",
+            () => {
+
+                const isDelivery =
+                    input.value === "delivery" &&
+                    input.checked;
+
+
+                if (isDelivery) {
+
+                    deliveryFields.classList.add(
+                        "show"
+                    );
+
+
+                    deliveryOption.classList.add(
+                        "active"
+                    );
+
+
+                    pickupOption.classList.remove(
+                        "active"
+                    );
+
+
+                    /*
+                        جعل حقول التوصيل مطلوبة
+                    */
+
+                    addressInput.required = true;
+
+
+                    timeInput.required = true;
+
+                }
+
+                else {
+
+                    deliveryFields.classList.remove(
+                        "show"
+                    );
+
+
+                    pickupOption.classList.add(
+                        "active"
+                    );
+
+
+                    deliveryOption.classList.remove(
+                        "active"
+                    );
+
+
+                    /*
+                        إزالة required عند الاستلام
+                    */
+
+                    addressInput.required = false;
+
+
+                    timeInput.required = false;
+
+                }
+
             }
-        }
+        );
+
     });
+
 }
 
-// ============================================
-// Update Assets
-// ============================================
-function updateAssets(assets) {
-    if (!assets) return;
-    
-    // Update logo
-    const logoElement = document.getElementById('logoImage');
-    if (logoElement && assets.logo) {
-        logoElement.src = assets.logo;
-    }
-    
-    // Update video background
-    const videoElement = document.getElementById('bgVideo');
-    if (videoElement && assets.background_video) {
-        const sourceElement = videoElement.querySelector('source');
-        if (sourceElement) {
-            sourceElement.src = assets.background_video;
-            videoElement.load();
-        }
-    }
-    
-    // Update proof image
-    const proofImage = document.querySelector('.proof-image');
-    if (proofImage && assets.proof_image) {
-        proofImage.src = assets.proof_image;
-    }
-}
 
-// ============================================
-// Update Links
-// ============================================
-function updateLinks(storeInfo) {
-    if (!storeInfo) return;
-    
-    // Update email link
-    const emailLink = document.getElementById('emailLink');
-    if (emailLink && storeInfo.email) {
-        emailLink.href = `mailto:${storeInfo.email}`;
-    }
-    
-    // Update map link
-    const mapLink = document.getElementById('mapLink');
-    if (mapLink && storeInfo.map_link) {
-        mapLink.href = storeInfo.map_link;
-    }
-}
 
-// ============================================
-// Setup Form Logic
-// ============================================
-function setupFormLogic(storeInfo) {
-    const form = document.getElementById('orderFormElement');
-    const pickupRadio = document.querySelector('input[name="orderType"][value="pickup"]');
-    const deliveryRadio = document.querySelector('input[name="orderType"][value="delivery"]');
-    const deliveryFields = document.getElementById('deliveryFields');
-    const addressInput = document.getElementById('address');
-    const availabilityInput = document.getElementById('availability');
-    
-    if (!form || !pickupRadio || !deliveryRadio || !deliveryFields) return;
-    
-    // Handle radio button changes
-    pickupRadio.addEventListener('change', function() {
-        if (this.checked) {
-            deliveryFields.classList.remove('active');
-            // Make delivery fields not required
-            if (addressInput) addressInput.required = false;
-            if (availabilityInput) availabilityInput.required = false;
-        }
-    });
-    
-    deliveryRadio.addEventListener('change', function() {
-        if (this.checked) {
-            deliveryFields.classList.add('active');
-            // Make delivery fields required
-            if (addressInput) addressInput.required = true;
-            if (availabilityInput) availabilityInput.required = true;
-        }
-    });
-    
-    // Handle form submission
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const fullName = document.getElementById('fullName').value.trim();
-        const orderType = document.querySelector('input[name="orderType"]:checked').value;
-        
-        if (!fullName) {
-            alert('الرجاء إدخال الاسم الكامل');
-            return;
-        }
-        
-        let message = '';
-        const storeName = storeInfo?.name || 'مكتبة الطالب';
-        
-        if (orderType === 'pickup') {
-            message = messageTemplates.pickup(storeName, fullName);
-        } else {
-            const address = addressInput ? addressInput.value.trim() : '';
-            const availability = availabilityInput ? availabilityInput.value.trim() : '';
-            
-            if (!address || !availability) {
-                alert('الرجاء إدخال عنوان التوصيل والوقت المناسب');
+/* =========================================================
+   FORM SUBMISSION
+========================================================= */
+
+function setupFormSubmission() {
+
+    const form =
+        document.getElementById("orderForm");
+
+
+    if (!form) return;
+
+
+    form.addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            const fullName =
+                document
+                    .getElementById("fullName")
+                    .value
+                    .trim();
+
+
+            const address =
+                document
+                    .getElementById("address")
+                    .value
+                    .trim();
+
+
+            const availableTime =
+                document
+                    .getElementById("availableTime")
+                    .value
+                    .trim();
+
+
+            const selectedType =
+                document.querySelector(
+                    'input[name="orderType"]:checked'
+                );
+
+
+            const orderType =
+                selectedType
+                    ? selectedType.value
+                    : "pickup";
+
+
+            /*
+                حماية إضافية
+            */
+
+            if (!fullName) {
+
+                alert(
+                    "المرجو إدخال الاسم الكامل."
+                );
+
                 return;
+
             }
-            
-            message = messageTemplates.delivery(storeName, fullName, address, availability);
+
+
+
+            /* =============================================
+               ORDER TYPE LABEL
+            ============================================= */
+
+            let orderTypeLabel =
+                "استلام من المكتبة";
+
+
+            if (orderType === "delivery") {
+
+                orderTypeLabel =
+                    "التوصيل للمنزل";
+
+            }
+
+
+
+            /* =============================================
+               CREATE WHATSAPP MESSAGE
+            ============================================= */
+
+            let message =
+                `مرحباً مكتبة ${appData.store_info.name}،\n\n` +
+                `أود إرسال لائحة الأدوات المدرسية.\n\n` +
+                `نوع الطلب: ${orderTypeLabel}\n` +
+                `الاسم: ${fullName}\n`;
+
+
+            /*
+                إضافة بيانات التوصيل فقط
+                عند اختيار التوصيل.
+            */
+
+            if (orderType === "delivery") {
+
+                message +=
+                    `العنوان: ${address}\n` +
+                    `الوقت المناسب: ${availableTime}\n`;
+
+            }
+
+
+            message +=
+                `\nتفضلوا صورة اللائحة:`;
+
+
+            /*
+                تنظيف رقم واتساب:
+
+                +212779063241
+                تصبح:
+
+                212779063241
+            */
+
+            const whatsappNumber =
+                cleanWhatsAppNumber(
+                    appData.store_info.whatsapp
+                );
+
+
+            /*
+                التحقق من الرقم
+            */
+
+            if (!whatsappNumber) {
+
+                alert(
+                    "رقم الواتساب غير متوفر حالياً."
+                );
+
+                return;
+
+            }
+
+
+
+            /* =============================================
+               WHATSAPP URL
+            ============================================= */
+
+            const whatsappURL =
+                `https://wa.me/${whatsappNumber}?text=` +
+                encodeURIComponent(message);
+
+
+            /*
+                Redirect
+            */
+
+            window.location.href =
+                whatsappURL;
+
         }
-        
-        // Encode message for URL
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = storeInfo?.whatsapp || '+212779063241';
-        const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
-        
-        // Open WhatsApp in new tab
-        window.open(whatsappUrl, '_blank');
-    });
-    
-    // Initialize form state
-    deliveryFields.classList.remove('active');
-    if (addressInput) addressInput.required = false;
-    if (availabilityInput) availabilityInput.required = false;
+    );
+
 }
 
-// ============================================
-// Video Background Error Handling
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('bgVideo');
-    const videoSource = video?.querySelector('source');
-    
-    if (video && videoSource) {
-        videoSource.addEventListener('error', function() {
-            console.warn('Video failed to load, using fallback image');
-            video.style.display = 'none';
-            const fallbackImg = video.querySelector('img');
-            if (fallbackImg) {
-                fallbackImg.style.display = 'block';
-            }
-        });
-    }
-});
 
-// ============================================
-// Console Debug Information
-// ============================================
-console.log('%c🏫 مكتبة الطالب - Dynamic Data Landing Page', 
-    'font-size: 20px; font-weight: bold; color: #2ecc71;');
-console.log('%cلتخصيص الموقع، قم بتعديل ملف data.json فقط', 
-    'font-size: 14px; color: #3498db;');
-console.log('%c💡 جميع التغييرات تتم تلقائياً دون لمس الكود', 
-    'font-size: 12px; color: #95a5a6;');
+
+/* =========================================================
+   CLEAN WHATSAPP NUMBER
+========================================================= */
+
+function cleanWhatsAppNumber(number) {
+
+    if (!number) return "";
+
+
+    /*
+        الاحتفاظ بالأرقام فقط
+    */
+
+    return String(number)
+        .replace(/\D/g, "");
+
+}
