@@ -18,16 +18,16 @@
   },
 
   "assets": {
-    "logo": "assets/logo.png",
-    "video": "assets/interface.mp4",
+    "logo": "logo.png",
+    "video": "interface.mp4",
     "gallery": [
-      "assets/i.png",
-      "assets/i1.png",
-      "assets/i2.png",
-      "assets/i3.png",
-      "assets/i5.png"
+      "i.png",
+      "i1.png",
+      "i2.png",
+      "i3.png",
+      "i5.png"
     ],
-    "social_proof": "assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
+    "social_proof": "b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
   },
 
   "content": {
