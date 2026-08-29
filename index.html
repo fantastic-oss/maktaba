@@ -2,123 +2,513 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة الطالب - تجهيز اللوائح المدرسية</title>
-    
-    <!-- Google Fonts - Cairo & Tajawal -->
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="أرسل لائحة الأدوات المدرسية واحصل على طلبك جاهزاً أو بالتوصيل إلى المنزل."
+    >
+
+    <title>المكتبة</title>
+
+    <!-- Arabic Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Main Stylesheet -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!-- Video Background -->
+
+    <!-- =====================================================
+         VIDEO BACKGROUND
+    ====================================================== -->
+
     <div class="video-background">
-        <video autoplay muted loop playsinline id="bgVideo">
+
+        <video
+            id="backgroundVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+        >
             <source src="assets/interface.mp4" type="video/mp4">
-            <!-- Fallback if video doesn't exist -->
-            <img src="assets/i5.png" alt="Background">
         </video>
-        <div class="overlay"></div>
+
     </div>
 
-    <!-- Main Container -->
-    <main class="main-container">
-        <!-- Header Section -->
-        <header class="header">
-            <div class="logo-container">
-                <img src="assets/logo.png" alt="Logo" class="logo" id="logoImage">
+
+    <!-- Dark Overlay -->
+    <div class="video-overlay"></div>
+
+
+    <!-- =====================================================
+         MAIN APPLICATION
+    ====================================================== -->
+
+    <main class="page-wrapper">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <header class="site-header">
+
+            <div class="container header-container">
+
+                <a
+                    href="#"
+                    class="logo-container"
+                    aria-label="الصفحة الرئيسية"
+                >
+
+                    <img
+                        id="storeLogo"
+                        src="assets/logo.png"
+                        alt="شعار المكتبة"
+                    >
+
+                    <div class="store-name-wrapper">
+                        <span id="storeNameHeader">
+                            المكتبة
+                        </span>
+
+                        <small id="storeSubtitleHeader">
+                            مستلزمات مدرسية بكل سهولة
+                        </small>
+                    </div>
+
+                </a>
+
+
+                <a
+                    id="mapLink"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="location-button"
+                >
+                    <span>📍</span>
+
+                    <span id="locationButtonText">
+                        موقع المكتبة
+                    </span>
+                </a>
+
             </div>
-            <h1 class="main-title" id="mainTitle">تجهيز اللوائح المدرسية</h1>
-            <p class="subtitle" id="subtitle">نوفر لك جميع الأدوات المدرسية بجودة عالية وأسعار مناسبة</p>
+
         </header>
 
-        <!-- Social Proof Section -->
-        <section class="social-proof" id="socialProof">
-            <div class="proof-image-container">
-                <img src="assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg" alt="Quality Proof" class="proof-image">
-            </div>
-            <div class="proof-text">
-                <i class="fas fa-check-circle"></i>
-                <span id="proofText">نجهز طلباتكم باحترافية وسرعة</span>
-            </div>
-        </section>
 
-        <!-- Order Form Section -->
-        <section class="form-section">
-            <div class="glass-card" id="orderForm">
-                <h2 class="form-title" id="formTitle">اطلب اللائحة الآن</h2>
-                
-                <form id="orderFormElement">
-                    <!-- Order Type Selection -->
-                    <div class="form-group">
-                        <label class="form-label" id="orderTypeLabel">نوع الطلب:</label>
-                        <div class="radio-group">
-                            <label class="radio-option">
-                                <input type="radio" name="orderType" value="pickup" checked>
-                                <span class="radio-custom"></span>
-                                <span class="radio-text" id="pickupOption">نوجدها ليك وتجي تاخذها واجدة</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="orderType" value="delivery">
-                                <span class="radio-custom"></span>
-                                <span class="radio-text" id="deliveryOption">التوصيل للمنزل</span>
-                            </label>
-                        </div>
+
+        <!-- =================================================
+             HERO SECTION
+        ================================================== -->
+
+        <section class="hero-section">
+
+            <div class="container hero-grid">
+
+
+                <!-- HERO CONTENT -->
+
+                <div class="hero-content">
+
+                    <div
+                        id="heroBadge"
+                        class="hero-badge"
+                    >
+                        🎒 الدخول المدرسي أصبح أسهل
                     </div>
 
-                    <!-- Name Field -->
-                    <div class="form-group">
-                        <label class="form-label" for="fullName" id="nameLabel">الاسم الكامل:</label>
-                        <input type="text" id="fullName" class="form-input" placeholder="أدخل اسمك الكامل" required>
+
+                    <h1 id="heroTitle">
+                        أرسل لائحتك وسنجهز كل مستلزماتك
+                    </h1>
+
+
+                    <p id="heroDescription">
+                        وفر وقتك وتجنب عناء البحث. أرسل لنا لائحة
+                        الأدوات المدرسية عبر واتساب، وسنقوم بتجهيزها
+                        لك باحترافية وسرعة.
+                    </p>
+
+
+                    <!-- Benefits -->
+
+                    <div class="benefits-list">
+
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span id="benefit1">
+                                تجهيز احترافي للطلبات
+                            </span>
+                        </div>
+
+
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span id="benefit2">
+                                توفير الوقت والمجهود
+                            </span>
+                        </div>
+
+
+                        <div class="benefit-item">
+                            <span class="benefit-icon">✓</span>
+                            <span id="benefit3">
+                                استلام من المكتبة أو توصيل للمنزل
+                            </span>
+                        </div>
+
                     </div>
 
-                    <!-- Delivery Fields (Hidden by default) -->
-                    <div class="delivery-fields" id="deliveryFields">
-                        <div class="form-group">
-                            <label class="form-label" for="address" id="addressLabel">عنوان التوصيل:</label>
-                            <input type="text" id="address" class="form-input" placeholder="الحي، الشارع، رقم المنزل" required>
+
+                    <!-- Social Proof -->
+
+                    <div class="social-proof">
+
+                        <div class="proof-image-wrapper">
+
+                            <img
+                                id="proofImage"
+                                src="assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
+                                alt="تجهيز الطلبات"
+                            >
+
                         </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="availability" id="availabilityLabel">متى ستكون متوفراً:</label>
-                            <textarea id="availability" class="form-input form-textarea" placeholder="مثال: متوفر يومياً بعد الساعة 5 مساءً" rows="3" required></textarea>
+
+
+                        <div class="proof-content">
+
+                            <strong id="proofTitle">
+                                نجهز طلباتكم باحترافية وسرعة
+                            </strong>
+
+                            <span id="proofDescription">
+                                فقط أرسل لائحتك وسنتكفل بالباقي
+                            </span>
+
                         </div>
+
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fab fa-whatsapp"></i>
-                        <span id="submitBtnText">إرسال اللائحة عبر الواتساب</span>
-                    </button>
-                </form>
-            </div>
-        </section>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-content">
-                <p class="footer-text" id="footerText">© 2024 جميع الحقوق محفوظة</p>
-                <div class="footer-links">
-                    <a href="#" class="footer-link" id="emailLink">
-                        <i class="fas fa-envelope"></i>
-                        <span id="emailText">البريد الإلكتروني</span>
-                    </a>
-                    <a href="#" class="footer-link" id="mapLink" target="_blank">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span id="mapText">موقعنا على الخريطة</span>
-                    </a>
+                    <!-- Gallery -->
+
+                    <div
+                        id="gallery"
+                        class="gallery"
+                    ></div>
+
                 </div>
+
+
+
+                <!-- =================================================
+                     ORDER FORM
+                ================================================== -->
+
+                <div class="form-card">
+
+                    <div class="form-header">
+
+                        <div class="form-icon">
+                            📝
+                        </div>
+
+
+                        <h2 id="formTitle">
+                            كيف ترغب في استلام طلبك؟
+                        </h2>
+
+
+                        <p id="formDescription">
+                            اختر الطريقة المناسبة لك ثم أرسل لائحتك عبر واتساب
+                        </p>
+
+                    </div>
+
+
+
+                    <form id="orderForm">
+
+
+                        <!-- Order Type -->
+
+                        <div class="form-section">
+
+                            <label class="section-label">
+                                اختر طريقة الطلب
+                            </label>
+
+
+                            <div class="order-options">
+
+
+                                <!-- Pickup -->
+
+                                <label
+                                    class="order-option active"
+                                    id="pickupOption"
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="orderType"
+                                        value="pickup"
+                                        checked
+                                    >
+
+                                    <div class="option-content">
+
+                                        <div class="option-icon">
+                                            🏪
+                                        </div>
+
+
+                                        <div>
+
+                                            <strong id="pickupTitle">
+                                                نوجدها ليك وتجي تاخذها واجدة
+                                            </strong>
+
+                                            <small id="pickupDescription">
+                                                استلام مباشر من المكتبة
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+
+
+                                <!-- Delivery -->
+
+                                <label
+                                    class="order-option"
+                                    id="deliveryOption"
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="orderType"
+                                        value="delivery"
+                                    >
+
+                                    <div class="option-content">
+
+                                        <div class="option-icon">
+                                            🚚
+                                        </div>
+
+
+                                        <div>
+
+                                            <strong id="deliveryTitle">
+                                                التوصيل للمنزل
+                                            </strong>
+
+                                            <small id="deliveryDescription">
+                                                نوصل طلبك إلى عنوانك
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Full Name -->
+
+                        <div class="form-group">
+
+                            <label
+                                for="fullName"
+                                id="nameLabel"
+                            >
+                                الاسم الكامل
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="fullName"
+                                placeholder="أدخل اسمك الكامل"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- Delivery Fields -->
+
+                        <div
+                            id="deliveryFields"
+                            class="delivery-fields"
+                        >
+
+
+                            <div class="form-group">
+
+                                <label
+                                    for="address"
+                                    id="addressLabel"
+                                >
+                                    عنوان التوصيل
+                                </label>
+
+
+                                <textarea
+                                    id="address"
+                                    name="address"
+                                    rows="3"
+                                    placeholder="المدينة، الحي، الشارع..."
+                                ></textarea>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+                                <label
+                                    for="availableTime"
+                                    id="timeLabel"
+                                >
+                                    متى ستكون متوفراً؟
+                                </label>
+
+
+                                <input
+                                    type="text"
+                                    id="availableTime"
+                                    name="availableTime"
+                                    placeholder="مثال: بعد الساعة 17:00"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Submit -->
+
+                        <button
+                            type="submit"
+                            class="whatsapp-button"
+                        >
+
+                            <span class="whatsapp-icon">
+                                ☎
+                            </span>
+
+                            <span id="submitButtonText">
+                                إرسال اللائحة عبر الواتساب
+                            </span>
+
+                        </button>
+
+
+
+                        <p
+                            class="form-note"
+                            id="formNote"
+                        >
+                            سيتم فتح واتساب لإرسال تفاصيل طلبك وصورة اللائحة.
+                        </p>
+
+
+                    </form>
+
+                </div>
+
             </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="site-footer">
+
+            <div class="container footer-container">
+
+                <div>
+                    <strong id="footerStoreName">
+                        المكتبة
+                    </strong>
+
+                    <span id="footerText">
+                        جميع حقوق النشر محفوظة
+                    </span>
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a
+                        id="emailLink"
+                        href="#"
+                    >
+                        <span>✉</span>
+
+                        <span id="footerEmail">
+                            البريد الإلكتروني
+                        </span>
+                    </a>
+
+
+                    <a
+                        id="footerMapLink"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span>📍</span>
+
+                        <span id="footerLocation">
+                            موقع المكتبة
+                        </span>
+                    </a>
+
+                </div>
+
+            </div>
+
         </footer>
+
+
     </main>
 
-    <!-- Main Script -->
+
+
     <script src="script.js"></script>
+
 </body>
 </html>
