@@ -12,19 +12,19 @@
     },
 
     "assets": {
-        "logo": "assets/logo.png",
+        "logo": "logo.png",
 
-        "background_video": "assets/interface.mp4",
+        "background_video": "interface.mp4",
 
         "gallery": [
-            "assets/i.png",
-            "assets/i1.png",
-            "assets/i2.png",
-            "assets/i3.png",
-            "assets/i5.png"
+            "i.png",
+            "i1.png",
+            "i2.png",
+            "i3.png",
+            "i5.png"
         ],
 
-        "proof_image": "assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
+        "proof_image": "b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
     },
 
     "content": {
