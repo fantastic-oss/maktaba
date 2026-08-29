@@ -1,216 +1,124 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title id="page-title">مكتبة</title>
-<meta id="meta-description" name="description" content="اطلب أدواتك المدرسية بسهولة عبر واتساب">
-<meta id="meta-theme-color" name="theme-color" content="#1E3A5F">
-
-<!-- Open Graph (filled dynamically from data.json) -->
-<meta id="og-title" property="og:title" content="">
-<meta id="og-description" property="og:description" content="">
-<meta id="og-image" property="og:image" content="">
-<meta property="og:type" content="website">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الطالب - تجهيز اللوائح المدرسية</title>
+    
+    <!-- Google Fonts - Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<!-- ===================== SKIP LINK ===================== -->
-<a class="skip-link" href="#order-section">تجاوز إلى نموذج الطلب</a>
-
-<!-- ===================== LOADING STATE ===================== -->
-<div id="page-loader" class="page-loader" aria-hidden="true">
-  <div class="loader-spinner"></div>
-</div>
-
-<!-- ===================== TOAST / ERROR BANNER ===================== -->
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-<!-- ===================== NAVBAR ===================== -->
-<header class="navbar" id="navbar">
-  <div class="navbar__inner">
-    <a href="#top" class="navbar__brand" aria-label="الصفحة الرئيسية">
-      <img id="nav-logo" class="navbar__logo" src="" alt="" width="40" height="40">
-      <span id="nav-store-name" class="navbar__name"></span>
-    </a>
-
-    <nav class="navbar__actions" aria-label="روابط سريعة">
-      <a id="nav-maps" class="navbar__link" href="#" target="_blank" rel="noopener noreferrer" aria-label="الموقع على خرائط جوجل">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
-        <span class="navbar__link-text">الموقع</span>
-      </a>
-      <a id="nav-whatsapp" class="btn btn--whatsapp btn--sm" href="#" target="_blank" rel="noopener noreferrer">
-        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.13L2 22l5.13-1.55a9.87 9.87 0 0 0 4.91 1.3h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Z"/></svg>
-        <span id="nav-whatsapp-label"></span>
-      </a>
-    </nav>
-  </div>
-</header>
-
-<!-- ===================== HERO ===================== -->
-<section class="hero" id="top">
-  <div class="hero__media" aria-hidden="true">
-    <video id="hero-video" class="hero__video" autoplay muted loop playsinline preload="metadata"></video>
-    <div class="hero__fallback" id="hero-fallback"></div>
-    <div class="hero__overlay"></div>
-    <div class="hero__ruled-lines"></div>
-  </div>
-
-  <div class="hero__content">
-    <span id="hero-badge" class="badge"></span>
-    <h1 id="hero-title" class="hero__title"></h1>
-    <p id="hero-description" class="hero__description"></p>
-
-    <div class="hero__actions">
-      <a id="hero-primary-cta" href="#order-section" class="btn btn--primary btn--lg">
-        <span id="hero-primary-cta-text"></span>
-      </a>
-      <a id="hero-secondary-cta" href="#gallery-section" class="btn btn--ghost btn--lg">
-        <span id="hero-secondary-cta-text"></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="hero__scroll-hint" aria-hidden="true">
-    <span></span>
-  </div>
-</section>
-
-<!-- ===================== ORDER FORM ===================== -->
-<section class="order-section" id="order-section">
-  <div class="container">
-    <div class="order-card glass">
-      <div class="order-card__header">
-        <h2 id="form-title" class="section-title"></h2>
-        <p id="form-description" class="section-description"></p>
-      </div>
-
-      <form id="order-form" class="order-form" novalidate>
-
-        <!-- Order type radio cards -->
-        <fieldset class="order-type" id="order-type-fieldset">
-          <legend class="visually-hidden">نوع الطلب</legend>
-
-          <label class="radio-card" id="pickup-card" for="order-type-pickup">
-            <input type="radio" id="order-type-pickup" name="order-type" value="pickup" checked>
-            <span class="radio-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-8.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-            </span>
-            <span id="pickup-label" class="radio-card__label"></span>
-            <span class="radio-card__check" aria-hidden="true"></span>
-          </label>
-
-          <label class="radio-card" id="delivery-card" for="order-type-delivery">
-            <input type="radio" id="order-type-delivery" name="order-type" value="delivery">
-            <span class="radio-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M3 7h11v9H3V7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 10h4l3 3v3h-7v-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="7" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="17.5" r="1.6" stroke="currentColor" stroke-width="1.7"/></svg>
-            </span>
-            <span id="delivery-label" class="radio-card__label"></span>
-            <span class="radio-card__check" aria-hidden="true"></span>
-          </label>
-        </fieldset>
-
-        <!-- Name (always visible) -->
-        <div class="field">
-          <label id="name-label" class="field__label" for="input-name"></label>
-          <input class="field__input" type="text" id="input-name" name="name" maxlength="80" autocomplete="name" required>
-          <span class="field__error" id="name-error" role="alert"></span>
-        </div>
-
-        <!-- Delivery-only fields -->
-        <div class="delivery-fields" id="delivery-fields" hidden>
-          <div class="field">
-            <label id="address-label" class="field__label" for="input-address"></label>
-            <input class="field__input" type="text" id="input-address" name="address" maxlength="160" autocomplete="street-address">
-            <span class="field__error" id="address-error" role="alert"></span>
-          </div>
-
-          <div class="field">
-            <label id="availability-label" class="field__label" for="input-availability"></label>
-            <input class="field__input" type="text" id="input-availability" name="availability" maxlength="80">
-            <span class="field__error" id="availability-error" role="alert"></span>
-          </div>
-        </div>
-
-        <!-- Image upload -->
-        <div class="field">
-          <span id="upload-label" class="field__label"></span>
-          <label class="upload-dropzone" for="input-image" id="upload-dropzone">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <span id="upload-dropzone-text">📎 اختر صورة اللائحة</span>
-            <input type="file" id="input-image" accept="image/png, image/jpeg, image/webp" class="visually-hidden">
-          </label>
-          <p id="upload-hint" class="field__hint"></p>
-          <span class="field__error" id="image-error" role="alert"></span>
-
-          <div class="image-preview" id="image-preview" hidden>
-            <img id="image-preview-img" src="" alt="معاينة صورة اللائحة">
-            <button type="button" id="image-remove" class="image-preview__remove" aria-label="إزالة الصورة">✕</button>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn--primary btn--lg btn--block" id="submit-button">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.5 3.62 1.44 5.13L2 22l5.13-1.55a9.87 9.87 0 0 0 4.91 1.3h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Z"/></svg>
-          <span id="submit-button-text"></span>
-        </button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== SOCIAL PROOF ===================== -->
-<section class="trust-section">
-  <div class="container">
-    <div class="trust-card glass">
-      <img id="trust-image" class="trust-card__image" src="" alt="" loading="lazy">
-      <div class="trust-card__body">
-        <h3 id="trust-title" class="trust-card__title"></h3>
-        <p id="trust-description" class="trust-card__description"></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== GALLERY ===================== -->
-<section class="gallery-section" id="gallery-section">
-  <div class="container">
-    <div class="section-header">
-      <h2 id="gallery-title" class="section-title"></h2>
-      <p id="gallery-description" class="section-description"></p>
-    </div>
-    <div class="gallery-grid" id="gallery-grid"></div>
-  </div>
-</section>
-
-<!-- ===================== FOOTER ===================== -->
-<footer class="footer">
-  <div class="container footer__inner">
-    <div class="footer__brand">
-      <img id="footer-logo" class="footer__logo" src="" alt="" width="36" height="36">
-      <div>
-        <p id="footer-store-name" class="footer__store-name"></p>
-        <p id="footer-city" class="footer__city"></p>
-      </div>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="assets/interface.mp4" type="video/mp4">
+            <!-- Fallback if video doesn't exist -->
+            <img src="assets/i5.png" alt="Background">
+        </video>
+        <div class="overlay"></div>
     </div>
 
-    <div class="footer__links">
-      <a id="footer-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="footer__link"></a>
-      <a id="footer-email" href="#" class="footer__link"></a>
-      <a id="footer-maps" href="#" target="_blank" rel="noopener noreferrer" class="footer__link">خرائط جوجل</a>
-    </div>
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="assets/logo.png" alt="Logo" class="logo" id="logoImage">
+            </div>
+            <h1 class="main-title" id="mainTitle">تجهيز اللوائح المدرسية</h1>
+            <p class="subtitle" id="subtitle">نوفر لك جميع الأدوات المدرسية بجودة عالية وأسعار مناسبة</p>
+        </header>
 
-    <p class="footer__copyright">
-      <span id="footer-copyright-text"></span> © <span id="footer-year"></span> <span id="footer-store-name-2"></span>
-    </p>
-  </div>
-</footer>
+        <!-- Social Proof Section -->
+        <section class="social-proof" id="socialProof">
+            <div class="proof-image-container">
+                <img src="assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg" alt="Quality Proof" class="proof-image">
+            </div>
+            <div class="proof-text">
+                <i class="fas fa-check-circle"></i>
+                <span id="proofText">نجهز طلباتكم باحترافية وسرعة</span>
+            </div>
+        </section>
 
-<script src="script.js"></script>
+        <!-- Order Form Section -->
+        <section class="form-section">
+            <div class="glass-card" id="orderForm">
+                <h2 class="form-title" id="formTitle">اطلب اللائحة الآن</h2>
+                
+                <form id="orderFormElement">
+                    <!-- Order Type Selection -->
+                    <div class="form-group">
+                        <label class="form-label" id="orderTypeLabel">نوع الطلب:</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="orderType" value="pickup" checked>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text" id="pickupOption">نوجدها ليك وتجي تاخذها واجدة</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="orderType" value="delivery">
+                                <span class="radio-custom"></span>
+                                <span class="radio-text" id="deliveryOption">التوصيل للمنزل</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label class="form-label" for="fullName" id="nameLabel">الاسم الكامل:</label>
+                        <input type="text" id="fullName" class="form-input" placeholder="أدخل اسمك الكامل" required>
+                    </div>
+
+                    <!-- Delivery Fields (Hidden by default) -->
+                    <div class="delivery-fields" id="deliveryFields">
+                        <div class="form-group">
+                            <label class="form-label" for="address" id="addressLabel">عنوان التوصيل:</label>
+                            <input type="text" id="address" class="form-input" placeholder="الحي، الشارع، رقم المنزل" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="availability" id="availabilityLabel">متى ستكون متوفراً:</label>
+                            <textarea id="availability" class="form-input form-textarea" placeholder="مثال: متوفر يومياً بعد الساعة 5 مساءً" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span id="submitBtnText">إرسال اللائحة عبر الواتساب</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text" id="footerText">© 2024 جميع الحقوق محفوظة</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" id="emailLink">
+                        <i class="fas fa-envelope"></i>
+                        <span id="emailText">البريد الإلكتروني</span>
+                    </a>
+                    <a href="#" class="footer-link" id="mapLink" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="mapText">موقعنا على الخريطة</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
 </body>
 </html>
