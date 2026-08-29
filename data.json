@@ -1,0 +1,76 @@
+{
+  "store_info": {
+    "name": "مكتبة النجاح",
+    "whatsapp": "+212779063241",
+    "email": "taswe9agency@yahoo.com",
+    "google_maps": "https://maps.google.com/?q=مكتبة+النجاح+الدار+البيضاء",
+    "city": "الدار البيضاء"
+  },
+
+  "branding": {
+    "primary": "#1E3A5F",
+    "secondary": "#F5A623",
+    "accent": "#E8544E",
+    "background": "#F6F8FB",
+    "surface": "#FFFFFF",
+    "text": "#16232E",
+    "text_muted": "#5C6B7A"
+  },
+
+  "assets": {
+    "logo": "assets/logo.png",
+    "video": "assets/interface.mp4",
+    "gallery": [
+      "assets/i.png",
+      "assets/i1.png",
+      "assets/i2.png",
+      "assets/i3.png",
+      "assets/i5.png"
+    ],
+    "social_proof": "assets/b70ac3e2cf7d93c3c55ff783eb91a4e5.jpg"
+  },
+
+  "content": {
+    "badge": "الدخول المدرسي 2026",
+    "hero_title": "لائحة الدخول المدرسي؟ خليها علينا",
+    "hero_description": "صوّر لائحة أدوات وليدك وصيفطها ليا، ونجهزوها ليك كاملة، وتجي تاخذها من المكتبة أو نوصلوها لباب الدار.",
+    "primary_cta": "صيفط اللائحة عبر واتساب",
+    "secondary_cta": "شوف المنتوجات",
+    "form_title": "صيفط طلبك الآن",
+    "form_description": "عمر الخانات لي تحتاجها، ونتواصلو معاك في أقرب وقت لتأكيد الطلب.",
+    "pickup_option": "نوجدها ليك وتجي تاخذها واجدة",
+    "delivery_option": "التوصيل للمنزل",
+    "name_label": "الاسم الكامل",
+    "name_placeholder": "مثال: سعاد العلوي",
+    "address_label": "عنوان التوصيل",
+    "address_placeholder": "الحي، الشارع، رقم المنزل...",
+    "availability_label": "متى ستكون متوفراً؟",
+    "availability_placeholder": "مثال: بعد العصر، أو نهاية الأسبوع",
+    "upload_label": "اختر صورة اللائحة",
+    "upload_hint": "سنفتح لك محادثة واتساب برسالة جاهزة، وسترفق الصورة هناك بنفسك.",
+    "submit_button": "إرسال اللائحة عبر الواتساب",
+    "social_proof_title": "نجهز طلباتكم باحترافية وسرعة",
+    "social_proof_description": "أكثر من 500 عائلة وثقت بنا هذا الموسم لتجهيز لوازم أبنائها المدرسية.",
+    "gallery_title": "لمحة من منتوجاتنا",
+    "gallery_description": "تشكيلة واسعة من الأدوات المدرسية بجودة عالية وأسعار مناسبة.",
+    "footer_text": "جميع الحقوق محفوظة",
+    "whatsapp_label": "تواصل معنا"
+  },
+
+  "messages": {
+    "whatsapp_intro": "مرحباً مكتبة {store_name} 👋\n\nأود إرسال لائحة الأدوات المدرسية.",
+    "whatsapp_order_type_label": "نوع الطلب",
+    "whatsapp_name_label": "الاسم",
+    "whatsapp_address_label": "العنوان",
+    "whatsapp_availability_label": "الوقت المناسب",
+    "whatsapp_image_note": "سأرسل صورة اللائحة في هذه المحادثة.",
+    "whatsapp_closing": "شكراً لكم.",
+    "whatsapp_success": "تم فتح واتساب، لا تنس إرفاق صورة اللائحة!",
+    "validation_name": "الرجاء إدخال الاسم الكامل",
+    "validation_address": "الرجاء إدخال عنوان التوصيل",
+    "validation_availability": "الرجاء تحديد الوقت المناسب",
+    "validation_image_type": "الرجاء اختيار ملف صورة صالح (JPG, PNG, WEBP)",
+    "validation_image_size": "حجم الصورة كبير جداً، الرجاء اختيار صورة أصغر من 8 ميغابايت",
+    "data_load_error": "تعذر تحميل بيانات المتجر، تم عرض بيانات افتراضية."
+  }
+}
